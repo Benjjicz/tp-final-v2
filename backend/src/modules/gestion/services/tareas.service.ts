@@ -19,16 +19,14 @@ export class TareasService {
   async crearTarea(dto: CreateTareaDto): Promise<{ id: number }> {
     const proyecto = await this.proyectoRepo.findOne({ where: { id: dto.idProyecto } });
     if (!proyecto) {
-      throw new NotFoundException(`El proyecto con ID ${dto.idProyecto} no existe.`);
+      throw new NotFoundException(`El proyecto no existe.`);
     }
 
     const nuevaTarea = this.tareaRepo.create({
       descripcion: dto.descripcion,
       estado: EstadosTareasEnum.PENDIENTE,
+      proyecto: proyecto // Pasamos el objeto y TypeORM hace la magia
     });
-    
-    // Le asignamos el proyecto
-    nuevaTarea.proyecto = proyecto;
 
     const guardado = await this.tareaRepo.save(nuevaTarea);
     return { id: guardado.id };
@@ -36,9 +34,7 @@ export class TareasService {
 
   async actualizarTarea(id: number, dto: UpdateTareaDto): Promise<void> {
     const tarea = await this.tareaRepo.findOne({ where: { id } });
-    if (!tarea) {
-      throw new NotFoundException(`Tarea con ID ${id} no encontrada.`);
-    }
+    if (!tarea) throw new NotFoundException(`Tarea no encontrada.`);
 
     if (dto.descripcion) tarea.descripcion = dto.descripcion;
     if (dto.estado) tarea.estado = dto.estado;

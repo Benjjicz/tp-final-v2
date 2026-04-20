@@ -1,24 +1,26 @@
 .clientes-container {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-
+  background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  
   .header-actions {
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 20px;
-    
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     h2 { margin: 0; color: #2c3e50; }
-    
-    .btn-nuevo {
-      background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;
-      &:hover { background-color: #2ecc71; }
-    }
+    .btn-nuevo { background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; &:hover { background-color: #2ecc71; } }
   }
 
-  .mensaje-carga { color: #7f8c8d; font-style: italic; }
+  .formulario-card {
+    background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e0e0e0;
+    h3 { margin-top: 0; color: #2c3e50; }
+    .form-group {
+      margin-bottom: 15px;
+      label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px;}
+      input, .form-select { width: 100%; max-width: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background: white;}
+    }
+    .form-actions {
+      display: flex; gap: 10px;
+      .btn-guardar { background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;}
+      .btn-cancelar { background-color: #95a5a6; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+    }
+  }
 
   .tabla-datos {
     width: 100%; border-collapse: collapse;
@@ -27,31 +29,12 @@
     
     .badge {
       padding: 4px 8px; border-radius: 12px; font-size: 0.85em; font-weight: bold;
-      &-activo { background-color: #d4edda; color: #2ECC71; }
-      &-baja { background-color: #f8d7da; color: #721c24; }
     }
 
-    .btn-editar {
-      background-color: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;
-      &:hover { background-color: #2980b9; }
-    }
+    .btn-editar { background-color: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; &:hover { background-color: #2980b9; } }
   }
 }
 
-.formulario-card {
-  background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e0e0e0;
-  h3 { margin-top: 0; color: #2c3e50; }
-  .form-group {
-    margin-bottom: 15px;
-    label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px;}
-    input { width: 100%; max-width: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-  }
-  .form-actions {
-    display: flex; gap: 10px;
-    .btn-guardar { background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;}
-    .btn-cancelar { background-color: #95a5a6; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
-  }
-  .form-select { 
-      width: 100%; max-width: 400px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background-color: white; 
-    }
-}
+/* COLORES UNIFICADOS PARA LOS ESTADOS */
+.badge-activo { background-color: #d4edda; color: #155724; } /* Verde para ACTIVO */
+.badge-baja { background-color: #f8d7da; color: #721c24; }   /* Rojo para BAJA */

@@ -39,7 +39,6 @@ export class Tareas implements OnInit {
   cargarDatos() {
     this.cargando = true;
     
-    // 1. Cargamos tareas
     this.tareaService.obtenerTareas().subscribe({
       next: (data) => {
         this.tareas = data;
@@ -49,7 +48,6 @@ export class Tareas implements OnInit {
       error: (err) => console.error('Error al cargar tareas:', err)
     });
 
-    // 2. Cargamos proyectos (solo los ACTIVOS para poder asignarles tareas)
     this.proyectoService.obtenerProyectos().subscribe({
       next: (data) => {
         this.proyectosActivos = data.filter((p: any) => p.estado === 'ACTIVO');
@@ -74,6 +72,7 @@ export class Tareas implements OnInit {
       return;
     }
 
+    // ACÁ ESTÁ EL PUENTE: Esto es lo que se envía al DTO del backend
     const nuevaTarea = { 
       descripcion: this.nuevaDescripcion,
       idProyecto: Number(this.nuevoIdProyecto) 
@@ -85,7 +84,7 @@ export class Tareas implements OnInit {
         this.cargarDatos();
       },
       error: (err) => {
-        console.error(err);
+        console.error('Error del backend:', err);
         alert('Error al guardar la tarea');
       }
     });
@@ -115,7 +114,7 @@ export class Tareas implements OnInit {
       return;
     }
 
-    const datosAct: any = {
+    const datosAct = {
       descripcion: this.editDescripcion,
       estado: this.editEstado,
       idProyecto: Number(this.editIdProyecto)

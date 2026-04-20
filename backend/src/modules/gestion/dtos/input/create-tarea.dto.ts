@@ -1,14 +1,14 @@
-import { IsString, IsNotEmpty, IsInt } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateTareaDto {
-  @ApiProperty({ description: 'Descripción detallada de la tarea' })
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   descripcion!: string;
 
-  @ApiProperty({ description: 'ID del proyecto al que pertenece la tarea' })
-  @IsInt()
+  @ApiProperty()
+  @IsNumber()
   @IsNotEmpty()
-  idProyecto!: number;
+  idProyecto!: number; // ¡Esta es la palabra clave que debe coincidir con el Frontend!
 }
