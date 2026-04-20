@@ -35,14 +35,14 @@ export class TareasController {
     @ApiBearerAuth()
     @ApiOkResponse({ type: ListTareaDTO, isArray: true })
     @Get()
-    async obtenerTareas(@Query("idProyecto") idProyecto?: number): Promise<ListTareaDTO[]> {
+    async obtenerTareas(@Query("idProyecto") idProyecto?: number) {
         const tareas = await this.tareasService.obtenerTareas(idProyecto);
         return tareas.map(t => ({
             id: t.id,
             descripcion: t.descripcion,
             estado: t.estado,
-            idProyecto: t.idProyecto,
-            nombreProyecto: t.proyecto ? t.proyecto.nombre : null
-        } as unknown as ListTareaDTO)); 
+            // CORRECCIÓN: Mandamos el objeto para el Frontend
+            proyecto: t.proyecto ? { id: t.proyecto.id, nombre: t.proyecto.nombre } : null
+        })); 
     }
 }

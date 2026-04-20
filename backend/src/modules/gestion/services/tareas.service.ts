@@ -17,17 +17,20 @@ export class TareasService {
   ) {}
 
   async crearTarea(dto: CreateTareaDto): Promise<{ id: number }> {
-    // Validamos que el proyecto padre exista
+    // 1. Validar que el proyecto exista
     const proyecto = await this.proyectoRepo.findOne({ where: { id: dto.idProyecto } });
     if (!proyecto) {
       throw new NotFoundException(`El proyecto con ID ${dto.idProyecto} no existe.`);
     }
 
+    // 2. Crear la instancia de la tarea
     const nuevaTarea = this.tareaRepo.create({
       descripcion: dto.descripcion,
-      idProyecto: proyecto.id,
       estado: EstadosTareasEnum.PENDIENTE,
     });
+
+    // 3. ASIGNACIÓN EXPLÍCITA: Se asigna el objeto proyecto para completar id_proyecto en la DB
+    nuevaTarea.proyecto = proyecto as any;
 
     const guardado = await this.tareaRepo.save(nuevaTarea);
     return { id: guardado.id };
@@ -42,13 +45,13 @@ export class TareasService {
     if (dto.descripcion) tarea.descripcion = dto.descripcion;
     if (dto.estado) tarea.estado = dto.estado;
 
-    // Si se envía un idProyecto, validamos que el nuevo proyecto exista antes de reasignar
+    // Si se reasigna el proyecto, buscamos y asignamos el objeto completo
     if (dto.idProyecto) {
       const proyecto = await this.proyectoRepo.findOne({ where: { id: dto.idProyecto } });
       if (!proyecto) {
         throw new NotFoundException(`El proyecto destino con ID ${dto.idProyecto} no existe.`);
       }
-      tarea.idProyecto = proyecto.id;
+      tarea.proyecto = proyecto as any;
     }
 
     await this.tareaRepo.save(tarea);
@@ -60,7 +63,7 @@ export class TareasService {
       throw new NotFoundException(`Tarea con ID ${id} no encontrada.`);
     }
     
-    // Eliminación física requerida por el enunciado
+    // Eliminación física
     await this.tareaRepo.remove(tarea);
   }
 
@@ -68,7 +71,6 @@ export class TareasService {
     const query = this.tareaRepo.createQueryBuilder('tarea')
       .leftJoinAndSelect('tarea.proyecto', 'proyecto');
 
-    // Permitimos filtrar las tareas
     if (idProyecto) {
       query.where('tarea.id_proyecto = :idProyecto', { idProyecto });
     }

@@ -30,15 +30,16 @@ export class ProyectosController {
     @ApiBearerAuth()
     @ApiOkResponse({ type: ListProyectoDTO, isArray: true })
     @Get()
-    async obtenerProyectos(@Query("estado") estado?: EstadosProyectosEnum): Promise<ListProyectoDTO[]> {
+    async obtenerProyectos(@Query("estado") estado?: EstadosProyectosEnum) {
         const proyectos = await this.proyectosService.obtenerProyectos(estado);
-        // Mapeo básico para respetar el DTO de salida
+        
+        
         return proyectos.map(p => ({
             id: p.id,
             nombre: p.nombre,
             estado: p.estado,
-            idCliente: p.idCliente,
-            nombreCliente: p.cliente ? p.cliente.nombre : null
-        } as unknown as ListProyectoDTO)); // Ajusta el casteo según las propiedades reales de tu ListProyectoDTO
+            // Mandamos el objeto cliente completo (si existe)
+            cliente: p.cliente ? { id: p.cliente.id, nombre: p.cliente.nombre } : null
+        })); 
     }
 }

@@ -17,6 +17,7 @@ export class TareaEntity {
   @JoinColumn({ name: 'id_proyecto' })
   proyecto!: ProyectoEntity;
 
-  @Column({ name: 'id_proyecto', nullable: false })
+  // CORRECCIÓN: Se marca como solo lectura para que TypeORM gestione la relación por el objeto 'proyecto'
+  @Column({ name: 'id_proyecto', nullable: false, insert: false, update: false })
   idProyecto!: number;
 }
