@@ -1,0 +1,94 @@
+<div class="clientes-container">
+  <div class="header-actions">
+    <h2>Gestión de Proyectos</h2>
+    <button class="btn-nuevo" (click)="toggleFormulario()" *ngIf="!mostrarFormulario && !mostrarFormularioEdicion">
+      + Nuevo Proyecto
+    </button>
+  </div>
+
+  <div class="formulario-card" *ngIf="mostrarFormulario">
+    <h3>Crear Nuevo Proyecto</h3>
+    <div class="form-group">
+      <label>Nombre del Proyecto:</label>
+      <input type="text" [(ngModel)]="nuevoNombre" placeholder="Ej: Rediseño Web">
+    </div>
+    <div class="form-group">
+      <label>Asignar Cliente:</label>
+      <select [(ngModel)]="nuevoClienteId" class="form-select">
+        <option [ngValue]="null">-- Proyecto Interno (Sin Cliente) --</option>
+        <option *ngFor="let cli of clientesActivos" [ngValue]="cli.id">
+          {{ cli.nombre }}
+        </option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn-guardar" (click)="guardarProyecto()">Guardar Proyecto</button>
+      <button class="btn-cancelar" (click)="toggleFormulario()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="formulario-card" *ngIf="mostrarFormularioEdicion">
+    <h3>Editar Proyecto #{{ proyectoEditandoId }}</h3>
+    <div class="form-group">
+      <label>Nombre:</label>
+      <input type="text" [(ngModel)]="editNombre">
+    </div>
+    <div class="form-group">
+      <label>Asignar Cliente:</label>
+      <select [(ngModel)]="editClienteId" class="form-select">
+        <option [ngValue]="null">-- Proyecto Interno (Sin Cliente) --</option>
+        <option *ngFor="let cli of clientesActivos" [ngValue]="cli.id">
+          {{ cli.nombre }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Estado:</label>
+      <select [(ngModel)]="editEstado" class="form-select">
+        <option value="ACTIVO">Activo</option>
+        <option value="FINALIZADO">Finalizado</option>
+        <option value="BAJA">Baja</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn-guardar" (click)="guardarEdicion()">Actualizar</button>
+      <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+    </div>
+  </div>
+
+  <p *ngIf="cargando" class="mensaje-carga">Cargando proyectos...</p>
+
+  <table class="tabla-datos" *ngIf="!cargando">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Cliente</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let proy of proyectos">
+        <td>{{ proy.id }}</td>
+        <td>{{ proy.nombre }}</td>
+        <td>
+          <span *ngIf="proy.cliente">{{ proy.cliente.nombre }}</span>
+          <span *ngIf="!proy.cliente" class="badge-interno">Interno</span>
+        </td>
+        <td>
+          <span class="badge" 
+            [ngClass]="{'badge-activo': proy.estado === 'ACTIVO', 'badge-baja': proy.estado === 'BAJA', 'badge-finalizado': proy.estado === 'FINALIZADO'}">
+            {{ proy.estado }}
+          </span>
+        </td>
+        <td>
+          <button class="btn-editar" (click)="abrirEditar(proy)">Editar</button>
+        </td>
+      </tr>
+      <tr *ngIf="proyectos.length === 0">
+        <td colspan="5" style="text-align: center; padding: 20px;">No hay proyectos registrados.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,20 @@
+<div class="login-container">
+  <div class="card login-card">
+    <h2>Acceso al Sistema</h2>
+    <p>Ingresa tus datos para continuar</p>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input type="text" [(ngModel)]="nombre" placeholder="Ej: usuario" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input type="password" [(ngModel)]="clave" placeholder="Tu contraseña" class="form-control">
+    </div>
+
+    <p class="error-text" *ngIf="errorMensaje">{{ errorMensaje }}</p>
+
+    <button class="btn-primary w-100" (click)="iniciarSesion()">Ingresar</button>
+  </div>
+</div>

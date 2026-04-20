@@ -1,0 +1,69 @@
+<div class="clientes-container">
+  <div class="header-actions">
+    <h2>Gestión de Clientes</h2>
+    <button class="btn-nuevo" (click)="toggleFormulario()" *ngIf="!mostrarFormulario && !mostrarFormularioEdicion">
+      + Nuevo Cliente
+    </button>
+  </div>
+
+  <div class="formulario-card" *ngIf="mostrarFormulario">
+    <h3>Crear Nuevo Cliente</h3>
+    <div class="form-group">
+      <label>Nombre de la Empresa o Cliente:</label>
+      <input type="text" [(ngModel)]="nuevoNombre" placeholder="Ej: Microsoft S.A.">
+    </div>
+    <div class="form-actions">
+      <button class="btn-guardar" (click)="guardarCliente()">Guardar Cliente</button>
+      <button class="btn-cancelar" (click)="toggleFormulario()">Cancelar</button>
+    </div>
+  </div>
+
+  <div class="formulario-card" *ngIf="mostrarFormularioEdicion">
+    <h3>Editar Cliente #{{ clienteEditandoId }}</h3>
+    <div class="form-group">
+      <label>Nombre:</label>
+      <input type="text" [(ngModel)]="editNombre">
+    </div>
+    <div class="form-group">
+      <label>Estado:</label>
+      <select [(ngModel)]="editEstado" class="form-select">
+        <option value="ACTIVO">Activo</option>
+        <option value="BAJA">Baja</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn-guardar" (click)="guardarEdicion()">Actualizar</button>
+      <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+    </div>
+  </div>
+
+  <p *ngIf="cargando" class="mensaje-carga">Cargando clientes desde el servidor...</p>
+
+  <table class="tabla-datos" *ngIf="!cargando">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.id }}</td>
+        <td>{{ cliente.nombre }}</td>
+        <td>
+          <span class="badge" [ngClass]="cliente.estado === 'Activo' ? 'badge-activo' : 'badge-baja'">
+            {{ cliente.estado }}
+          </span>
+        </td>
+        <td>
+          <button class="btn-editar" (click)="abrirEditar(cliente)">Editar</button>
+        </td>
+      </tr>
+      <tr *ngIf="clientes.length === 0">
+        <td colspan="4" style="text-align: center; padding: 20px;">No hay clientes registrados aún.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
