@@ -2,7 +2,6 @@ import { Body, Controller, Get, Param, Post, Put, Delete, Query, ParseIntPipe } 
 import { CreateTareaDto } from "../dtos/input/create-tarea.dto";
 import { UpdateTareaDto } from "../dtos/input/update-tarea.dto";
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { ListTareaDTO } from "../dtos/output/list-tarea.dto";
 import { TareasService } from "../services/tareas.service";
 
 @ApiTags('Tareas')
@@ -32,16 +31,14 @@ export class TareasController {
         await this.tareasService.eliminarTarea(id);
     }
 
-    @ApiBearerAuth()
-    @ApiOkResponse({ type: ListTareaDTO, isArray: true })
     @Get()
     async obtenerTareas(@Query("idProyecto") idProyecto?: number) {
         const tareas = await this.tareasService.obtenerTareas(idProyecto);
+        // Mapeamos para devolver el objeto 'proyecto' que espera el Frontend
         return tareas.map(t => ({
             id: t.id,
             descripcion: t.descripcion,
             estado: t.estado,
-            // CORRECCIÓN: Mandamos el objeto para el Frontend
             proyecto: t.proyecto ? { id: t.proyecto.id, nombre: t.proyecto.nombre } : null
         })); 
     }
