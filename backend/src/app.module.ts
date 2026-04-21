@@ -20,7 +20,7 @@ import { GestionModule } from './modules/gestion/gestion.module';
         password: configService.get<string>('DB_PASSWORD', 'root'),
         database: configService.get<string>('DB_NAME', 'daw_db'),
         autoLoadEntities: true,
-        synchronize: false, // Debe ser false porque usamos el Script_BD.sql
+        synchronize: false, 
       }),
     }),
     AuthModule,

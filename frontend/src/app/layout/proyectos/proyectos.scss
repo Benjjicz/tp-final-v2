@@ -40,3 +40,25 @@
     .btn-editar { background-color: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; &:hover { background-color: #2980b9; } }
   }
 }
+
+/* ESTILOS DEL BUSCADOR EXTRA */
+.buscador-container {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: flex-end;
+  
+  .input-buscador {
+    width: 300px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+    transition: box-shadow 0.3s ease;
+    
+    &:focus {
+      box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+      border-color: #3498db;
+    }
+  }
+}

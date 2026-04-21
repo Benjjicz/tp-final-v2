@@ -10,14 +10,14 @@
     <h3>Crear Nuevo Proyecto</h3>
     <div class="form-group">
       <label>Nombre del Proyecto:</label>
-      <input type="text" [(ngModel)]="nuevoNombre" placeholder="Ej: Rediseño Web">
+      <input type="text" [(ngModel)]="nuevoNombre" placeholder="Ej: Rediseño Web Corporativa">
     </div>
     <div class="form-group">
-      <label>Asignar Cliente:</label>
-      <select [(ngModel)]="nuevoClienteId" class="form-select">
+      <label>Asignar Cliente (Opcional):</label>
+      <select [(ngModel)]="nuevoIdCliente" class="form-select">
         <option [ngValue]="null">-- Proyecto Interno (Sin Cliente) --</option>
-        <option *ngFor="let cli of clientesActivos" [ngValue]="cli.id">
-          {{ cli.nombre }}
+        <option *ngFor="let cliente of clientesActivos" [ngValue]="cliente.id">
+          {{ cliente.nombre }}
         </option>
       </select>
     </div>
@@ -34,11 +34,11 @@
       <input type="text" [(ngModel)]="editNombre">
     </div>
     <div class="form-group">
-      <label>Asignar Cliente:</label>
-      <select [(ngModel)]="editClienteId" class="form-select">
-        <option [ngValue]="null">-- Proyecto Interno (Sin Cliente) --</option>
-        <option *ngFor="let cli of clientesActivos" [ngValue]="cli.id">
-          {{ cli.nombre }}
+      <label>Cliente:</label>
+      <select [(ngModel)]="editIdCliente" class="form-select">
+        <option [ngValue]="null">-- Proyecto Interno --</option>
+        <option *ngFor="let cliente of clientesActivos" [ngValue]="cliente.id">
+          {{ cliente.nombre }}
         </option>
       </select>
     </div>
@@ -58,6 +58,13 @@
 
   <p *ngIf="cargando" class="mensaje-carga">Cargando proyectos...</p>
 
+  <div class="buscador-container" *ngIf="!cargando">
+    <input type="text" 
+           [(ngModel)]="terminoBusqueda" 
+           placeholder="🔍 Buscar proyecto por nombre..." 
+           class="input-buscador">
+  </div>
+
   <table class="tabla-datos" *ngIf="!cargando">
     <thead>
       <tr>
@@ -69,16 +76,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let proy of proyectos">
+      <tr *ngFor="let proy of proyectosFiltrados">
         <td>{{ proy.id }}</td>
         <td>{{ proy.nombre }}</td>
         <td>
-          <span *ngIf="proy.cliente">{{ proy.cliente.nombre }}</span>
+          <span *ngIf="proy.cliente" class="badge-proyecto">{{ proy.cliente.nombre }}</span>
           <span *ngIf="!proy.cliente" class="badge-interno">Interno</span>
         </td>
         <td>
           <span class="badge" 
-            [ngClass]="{'badge-activo': proy.estado === 'ACTIVO', 'badge-baja': proy.estado === 'BAJA', 'badge-finalizado': proy.estado === 'FINALIZADO'}">
+            [ngClass]="{
+              'badge-activo': proy.estado === 'ACTIVO', 
+              'badge-finalizado': proy.estado === 'FINALIZADO', 
+              'badge-baja': proy.estado === 'BAJA'
+            }">
             {{ proy.estado }}
           </span>
         </td>
@@ -86,8 +97,8 @@
           <button class="btn-editar" (click)="abrirEditar(proy)">Editar</button>
         </td>
       </tr>
-      <tr *ngIf="proyectos.length === 0">
-        <td colspan="5" style="text-align: center; padding: 20px;">No hay proyectos registrados.</td>
+      <tr *ngIf="proyectosFiltrados.length === 0">
+        <td colspan="5" style="text-align: center; padding: 20px;">No se encontraron proyectos con ese nombre.</td>
       </tr>
     </tbody>
   </table>
