@@ -1,27 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-// Importamos las herramientas necesarias para el menú y el contenido central
-import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router'; 
-import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  // Agregamos los módulos de rutas aquí para que funcionen en el HTML
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive], 
-  templateUrl: './dashboard.html', 
+  imports: [CommonModule, RouterModule],
+  templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  // Aquí declaramos la variable que Angular estaba buscando
+  nombreUsuario: string = 'Usuario'; 
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.extraerNombreDelToken();
+  }
+
+  extraerNombreDelToken() {
+    // Verificamos que estamos en el navegador para evitar errores
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('token'); 
+      
+      if (token) {
+        try {
+          // Desencriptamos el JWT para sacar el nombre real
+          const payloadBase64 = token.split('.')[1]; 
+          const payloadDecodificado = JSON.parse(atob(payloadBase64)); 
+          this.nombreUsuario = payloadDecodificado.nombre; 
+        } catch (e) {
+          console.error('No se pudo decodificar el token', e);
+        }
+      }
+    }
+  }
 
   cerrarSesion() {
-    this.authService.cerrarSesion(); 
-    this.router.navigate(['/login']); 
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('token');
+    }
+    this.router.navigate(['/login']);
   }
- 
 }

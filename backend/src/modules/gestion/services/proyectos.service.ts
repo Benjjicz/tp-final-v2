@@ -63,7 +63,7 @@ export class ProyectosService {
         if (cliente.estado !== EstadosClientesEnum.ACTIVO) {
           throw new BadRequestException('Solo se pueden asociar clientes en estado ACTIVO a un proyecto.');
         }
-        // CORRECCIÓN 3: Pasamos el objeto 'cliente'
+        
         proyecto.cliente = cliente as any;
       }
     }

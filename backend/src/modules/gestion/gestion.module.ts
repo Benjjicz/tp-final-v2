@@ -13,7 +13,7 @@ import { TareaEntity } from "./entities/tarea.entity";
 
 @Module({
     imports: [
-        // Registro de las entidades para que TypeORM pueda usarlas en este módulo [cite: 2]
+        // Registro de las entidades para que TypeORM pueda usarlas en este módulo 
         TypeOrmModule.forFeature([ClienteEntity, ProyectoEntity, TareaEntity]),
         // Importación de AuthModule para permitir el uso de AuthGuard y JwtService 
         AuthModule 

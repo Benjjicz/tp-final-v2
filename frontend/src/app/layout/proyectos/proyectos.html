@@ -2,7 +2,7 @@
   <div class="header-actions">
     <h2>Gestión de Proyectos</h2>
     <button class="btn-nuevo" (click)="toggleFormulario()" *ngIf="!mostrarFormulario && !mostrarFormularioEdicion">
-      + Nuevo Proyecto
+      <span class="material-symbols-outlined">add</span> Nuevo Proyecto
     </button>
   </div>
 
@@ -22,8 +22,8 @@
       </select>
     </div>
     <div class="form-actions">
-      <button class="btn-guardar" (click)="guardarProyecto()">Guardar Proyecto</button>
-      <button class="btn-cancelar" (click)="toggleFormulario()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardarProyecto()"><span class="material-symbols-outlined">save</span> Guardar Proyecto</button>
+      <button class="btn-cancelar" (click)="toggleFormulario()"><span class="material-symbols-outlined">close</span> Cancelar</button>
     </div>
   </div>
 
@@ -51,8 +51,8 @@
       </select>
     </div>
     <div class="form-actions">
-      <button class="btn-guardar" (click)="guardarEdicion()">Actualizar</button>
-      <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardarEdicion()"><span class="material-symbols-outlined">save</span> Actualizar</button>
+      <button class="btn-cancelar" (click)="cancelarEdicion()"><span class="material-symbols-outlined">close</span> Cancelar</button>
     </div>
   </div>
 
@@ -94,7 +94,9 @@
           </span>
         </td>
         <td>
-          <button class="btn-editar" (click)="abrirEditar(proy)">Editar</button>
+          <button class="btn-editar" (click)="abrirEditar(proy)">
+            <span class="material-symbols-outlined">edit</span> Editar
+          </button>
         </td>
       </tr>
       <tr *ngIf="proyectosFiltrados.length === 0">

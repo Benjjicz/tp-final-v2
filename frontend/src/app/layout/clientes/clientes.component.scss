@@ -4,7 +4,12 @@
   .header-actions {
     display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     h2 { margin: 0; color: #2c3e50; }
-    .btn-nuevo { background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; &:hover { background-color: #2ecc71; } }
+    .btn-nuevo { 
+      background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; 
+      display: inline-flex; align-items: center; gap: 6px;
+      .material-symbols-outlined { font-size: 20px; }
+      &:hover { background-color: #2ecc71; } 
+    }
   }
 
   .formulario-card {
@@ -17,8 +22,16 @@
     }
     .form-actions {
       display: flex; gap: 10px;
-      .btn-guardar { background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;}
-      .btn-cancelar { background-color: #95a5a6; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+      .btn-guardar { 
+        background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;
+        display: inline-flex; align-items: center; gap: 6px;
+        .material-symbols-outlined { font-size: 18px; }
+      }
+      .btn-cancelar { 
+        background-color: #95a5a6; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; 
+        display: inline-flex; align-items: center; gap: 6px;
+        .material-symbols-outlined { font-size: 18px; }
+      }
     }
   }
 
@@ -31,10 +44,14 @@
       padding: 4px 8px; border-radius: 12px; font-size: 0.85em; font-weight: bold;
     }
 
-    .btn-editar { background-color: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; &:hover { background-color: #2980b9; } }
+    .btn-editar { 
+      background-color: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; 
+      display: inline-flex; align-items: center; gap: 4px;
+      .material-symbols-outlined { font-size: 16px; }
+      &:hover { background-color: #2980b9; } 
+    }
   }
 }
 
-/* COLORES UNIFICADOS PARA LOS ESTADOS */
-.badge-activo { background-color: #d4edda; color: #155724; } /* Verde para ACTIVO */
-.badge-baja { background-color: #f8d7da; color: #721c24; }   /* Rojo para BAJA */
+.badge-activo { background-color: #d4edda; color: #155724; } 
+.badge-baja { background-color: #f8d7da; color: #721c24; }

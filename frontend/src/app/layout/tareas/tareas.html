@@ -2,28 +2,28 @@
   <div class="header-actions">
     <h2>Gestión de Tareas</h2>
     <button class="btn-nuevo" (click)="toggleFormulario()" *ngIf="!mostrarFormulario && !mostrarFormularioEdicion">
-      + Nueva Tarea
+      <span class="material-symbols-outlined">add</span> Nueva Tarea
     </button>
   </div>
 
   <div class="formulario-card" *ngIf="mostrarFormulario">
     <h3>Crear Nueva Tarea</h3>
     <div class="form-group">
-      <label>Descripción de la Tarea:</label>
-      <input type="text" [(ngModel)]="nuevaDescripcion" placeholder="Ej: Diseñar el logo principal">
+      <label>Descripción:</label>
+      <input type="text" [(ngModel)]="nuevaDescripcion" placeholder="Ej: Diseñar la base de datos">
     </div>
     <div class="form-group">
-      <label>Asignar a Proyecto:</label>
+      <label>Proyecto:</label>
       <select [(ngModel)]="nuevoIdProyecto" class="form-select">
-        <option [ngValue]="null">-- Selecciona un Proyecto --</option>
+        <option [ngValue]="null" disabled>-- Seleccione un proyecto --</option>
         <option *ngFor="let proy of proyectosActivos" [ngValue]="proy.id">
           {{ proy.nombre }}
         </option>
       </select>
     </div>
     <div class="form-actions">
-      <button class="btn-guardar" (click)="guardarTarea()">Guardar Tarea</button>
-      <button class="btn-cancelar" (click)="toggleFormulario()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardarTarea()"><span class="material-symbols-outlined">save</span> Guardar Tarea</button>
+      <button class="btn-cancelar" (click)="toggleFormulario()"><span class="material-symbols-outlined">close</span> Cancelar</button>
     </div>
   </div>
 
@@ -34,16 +34,6 @@
       <input type="text" [(ngModel)]="editDescripcion">
     </div>
     <div class="form-group">
-      <label>Cambiar de Proyecto:</label>
-      <select [(ngModel)]="editIdProyecto" class="form-select">
-        <option [ngValue]="null">-- Selecciona un Proyecto --</option>
-        <option *ngFor="let proy of proyectosActivos" [ngValue]="proy.id">
-          {{ proy.nombre }}
-        </option>
-      </select>
-    </div>
-    
-    <div class="form-group">
       <label>Estado:</label>
       <select [(ngModel)]="editEstado" class="form-select">
         <option value="PENDIENTE">Pendiente</option>
@@ -51,10 +41,9 @@
         <option value="BAJA">Baja</option>
       </select>
     </div>
-    
     <div class="form-actions">
-      <button class="btn-guardar" (click)="guardarEdicion()">Actualizar</button>
-      <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+      <button class="btn-guardar" (click)="guardarEdicion()"><span class="material-symbols-outlined">save</span> Actualizar</button>
+      <button class="btn-cancelar" (click)="cancelarEdicion()"><span class="material-symbols-outlined">close</span> Cancelar</button>
     </div>
   </div>
 
@@ -75,24 +64,20 @@
         <td>{{ tarea.id }}</td>
         <td>{{ tarea.descripcion }}</td>
         <td>
-          <span *ngIf="tarea.proyecto" class="badge-proyecto">{{ tarea.proyecto.nombre }}</span>
-          <span *ngIf="!tarea.proyecto" class="badge-baja">Sin Proyecto</span>
+          <span class="badge-interno">{{ tarea.proyecto?.nombre }}</span>
         </td>
-        
         <td>
-          <span class="badge" 
-            [ngClass]="{
-              'badge-pendiente': tarea.estado === 'PENDIENTE', 
-              'badge-finalizado': tarea.estado === 'FINALIZADA', 
-              'badge-baja': tarea.estado === 'BAJA'
-            }">
+          <span class="badge" [ngClass]="{'badge-activo': tarea.estado === 'PENDIENTE', 'badge-finalizado': tarea.estado === 'FINALIZADA', 'badge-baja': tarea.estado === 'BAJA'}">
             {{ tarea.estado }}
           </span>
         </td>
-        
-        <td class="acciones-cell">
-          <button class="btn-editar" (click)="abrirEditar(tarea)">Editar</button>
-          <button class="btn-eliminar" (click)="eliminarTarea(tarea.id)">Borrar</button>
+        <td>
+          <button class="btn-editar" (click)="abrirEditar(tarea)">
+            <span class="material-symbols-outlined">edit</span> Editar
+          </button>
+          <button class="btn-eliminar" (click)="eliminarTarea(tarea.id)">
+            <span class="material-symbols-outlined">delete</span> Borrar
+          </button>
         </td>
       </tr>
       <tr *ngIf="tareas.length === 0">

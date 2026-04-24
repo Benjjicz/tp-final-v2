@@ -4,7 +4,12 @@
   .header-actions {
     display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     h2 { margin: 0; color: #2c3e50; }
-    .btn-nuevo { background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; &:hover { background-color: #2ecc71; } }
+    .btn-nuevo { 
+      background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; 
+      display: inline-flex; align-items: center; gap: 6px;
+      .material-symbols-outlined { font-size: 20px; }
+      &:hover { background-color: #2ecc71; } 
+    }
   }
 
   .formulario-card {
@@ -17,12 +22,20 @@
     }
     .form-actions {
       display: flex; gap: 10px;
-      .btn-guardar { background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;}
-      .btn-cancelar { background-color: #95a5a6; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
+      .btn-guardar { 
+        background-color: #27ae60; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;
+        display: inline-flex; align-items: center; gap: 6px;
+        .material-symbols-outlined { font-size: 18px; }
+      }
+      .btn-cancelar { 
+        background-color: #95a5a6; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; 
+        display: inline-flex; align-items: center; gap: 6px;
+        .material-symbols-outlined { font-size: 18px; }
+      }
     }
   }
 
- .tabla-datos {
+  .tabla-datos {
     width: 100%; border-collapse: collapse;
     th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
     th { background-color: #f8f9fa; color: #2c3e50; font-weight: 600; }
@@ -31,20 +44,24 @@
       padding: 4px 8px; border-radius: 12px; font-size: 0.85em; font-weight: bold;
       &-activo { background-color: #d4edda; color: #155724; }
       &-baja { background-color: #f8d7da; color: #721c24; }
-      &-finalizado { background-color: #cce5ff; color: #004085; } /* Azul para finalizado */
+      &-finalizado { background-color: #cce5ff; color: #004085; } 
     }
     .badge-interno {
       background-color: #e2e3e5; color: #383d41; padding: 4px 8px; border-radius: 4px; font-size: 0.85em;
     }
 
-    /* TUS BOTONES DE ACCIÓN */
-    .btn-editar { background-color: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; &:hover { background-color: #2980b9; } }
+    .btn-editar { 
+      background-color: #3498db; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; 
+      display: inline-flex; align-items: center; gap: 4px;
+      .material-symbols-outlined { font-size: 16px; }
+      &:hover { background-color: #2980b9; } 
+    }
     
-    /* AGREGA ESTA LÍNEA PARA EL BOTÓN DE BORRAR */
-    .btn-eliminar { background-color: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-left: 8px; &:hover { background-color: #c0392b; } }
+    .btn-eliminar { 
+      background-color: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-left: 8px; 
+      display: inline-flex; align-items: center; gap: 4px;
+      .material-symbols-outlined { font-size: 16px; }
+      &:hover { background-color: #c0392b; } 
+    }
   }
 }
-
-.badge-pendiente { background-color: #ffeeba; color: #856404; } /* Amarillo para pendiente */
-.badge-finalizado { background-color: #d4edda; color: #155724; } /* Verde para finalizado */
-.badge-baja { background-color: #f8d7da; color: #721c24; } /* Rojo para baja */
