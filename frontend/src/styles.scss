@@ -1,0 +1,62 @@
+
+/* =========================================
+   VARIABLES GLOBALES - PALETA DE COLORES
+   ========================================= */
+:root {
+  --color-dark-navy: #1A2530;   // El color más oscuro, ideal para la barra lateral (Sidebar)
+  --color-slate: #2B4151;       // Ideal para encabezados o botones primarios
+  --color-steel: #446271;       // Color secundario, para bordes u hovers
+  --color-soft-blue: #678B99;   // Detalles sutiles o insignias
+  --color-light-grey: #B1C8CF;  // Fondos secundarios o texto sobre fondos oscuros
+  
+  // Colores de utilidad y fondo
+  --bg-color: #F4F7F8;          // Un gris azulado ultra claro para el fondo de la app
+  --surface-color: #FFFFFF;     // Blanco puro para las tarjetas/formularios
+  --text-main: #1A2530;         // Texto principal (usamos tu color oscuro)
+  --text-muted: #678B99;        // Texto secundario
+  
+  // Colores de estado (para los estados de proyectos/clientes/tareas)
+  --state-active: #2ECC71;      // Verde activo
+  --state-pending: #F39C12;     // Naranja pendiente
+  --state-inactive: #E74C3C;    // Rojo baja
+}
+
+/* =========================================
+   ESTILOS BASE
+   ========================================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+/* Clases utilitarias globales para botones */
+.btn-primary {
+  background-color: var(--color-slate);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--color-steel);
+  }
+}
+
+/* Diseño base para tarjetas (formularios, tablas) */
+.card {
+  background-color: var(--surface-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(26, 37, 48, 0.05);
+  padding: 20px;
+}

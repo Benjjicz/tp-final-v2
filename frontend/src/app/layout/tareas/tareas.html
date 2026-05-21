@@ -1,0 +1,88 @@
+<div class="clientes-container">
+  <div class="header-actions">
+    <h2>Gestión de Tareas</h2>
+    <button class="btn-nuevo" (click)="toggleFormulario()" *ngIf="!mostrarFormulario && !mostrarFormularioEdicion">
+      <span class="material-symbols-outlined">add</span> Nueva Tarea
+    </button>
+  </div>
+
+  <div class="formulario-card" *ngIf="mostrarFormulario">
+    <h3>Crear Nueva Tarea</h3>
+    <div class="form-group">
+      <label>Descripción:</label>
+      <input type="text" [(ngModel)]="nuevaDescripcion" placeholder="Ej: Diseñar la base de datos">
+    </div>
+    <div class="form-group">
+      <label>Proyecto:</label>
+      <select [(ngModel)]="nuevoIdProyecto" class="form-select">
+        <option [ngValue]="null" disabled>-- Seleccione un proyecto --</option>
+        <option *ngFor="let proy of proyectosActivos" [ngValue]="proy.id">
+          {{ proy.nombre }}
+        </option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn-guardar" (click)="guardarTarea()"><span class="material-symbols-outlined">save</span> Guardar Tarea</button>
+      <button class="btn-cancelar" (click)="toggleFormulario()"><span class="material-symbols-outlined">close</span> Cancelar</button>
+    </div>
+  </div>
+
+  <div class="formulario-card" *ngIf="mostrarFormularioEdicion">
+    <h3>Editar Tarea #{{ tareaEditandoId }}</h3>
+    <div class="form-group">
+      <label>Descripción:</label>
+      <input type="text" [(ngModel)]="editDescripcion">
+    </div>
+    <div class="form-group">
+      <label>Estado:</label>
+      <select [(ngModel)]="editEstado" class="form-select">
+        <option value="PENDIENTE">Pendiente</option>
+        <option value="FINALIZADA">Finalizada</option>
+        <option value="BAJA">Baja</option>
+      </select>
+    </div>
+    <div class="form-actions">
+      <button class="btn-guardar" (click)="guardarEdicion()"><span class="material-symbols-outlined">save</span> Actualizar</button>
+      <button class="btn-cancelar" (click)="cancelarEdicion()"><span class="material-symbols-outlined">close</span> Cancelar</button>
+    </div>
+  </div>
+
+  <p *ngIf="cargando" class="mensaje-carga">Cargando tareas...</p>
+
+  <table class="tabla-datos" *ngIf="!cargando">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descripción</th>
+        <th>Proyecto</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tarea of tareas">
+        <td>{{ tarea.id }}</td>
+        <td>{{ tarea.descripcion }}</td>
+        <td>
+          <span class="badge-interno">{{ tarea.proyecto?.nombre }}</span>
+        </td>
+        <td>
+          <span class="badge" [ngClass]="{'badge-activo': tarea.estado === 'PENDIENTE', 'badge-finalizado': tarea.estado === 'FINALIZADA', 'badge-baja': tarea.estado === 'BAJA'}">
+            {{ tarea.estado }}
+          </span>
+        </td>
+        <td>
+          <button class="btn-editar" (click)="abrirEditar(tarea)">
+            <span class="material-symbols-outlined">edit</span> Editar
+          </button>
+          <button class="btn-eliminar" (click)="eliminarTarea(tarea.id)">
+            <span class="material-symbols-outlined">delete</span> Borrar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="tareas.length === 0">
+        <td colspan="5" style="text-align: center; padding: 20px;">No hay tareas registradas.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
